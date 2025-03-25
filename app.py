@@ -171,7 +171,23 @@ def send_message():
             save_chat(chat_messages)
     
     return jsonify({'status': 'success'})
+from flask import request, make_response
+import requests
 
+@app.route('/proxy/<path:url>')
+def proxy(url):
+    # Whitelist only your streaming domains
+    allowed_domains = ['cdn.crichdplays.ru', 'thedaddy.to', 'vidembed.re']
+    if not any(domain in url for domain in allowed_domains):
+        return "Invalid domain", 403
+    
+    resp = requests.get(url, headers={
+        'Referer': 'https://your-render-url.onrender.com/',
+        'User-Agent': 'Mozilla/5.0'
+    })
+    response = make_response(resp.content)
+    response.headers['Content-Type'] = resp.headers['Content-Type']
+    return response
 @app.route('/chat/get')
 def get_messages():
     current_session_id = session.get('message_id', '')
