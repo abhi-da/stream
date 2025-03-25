@@ -246,6 +246,49 @@
       right: -100%;
       border-left: none;
     }
+/* Mobile Toggle Button */
+.mobile-links-toggle {
+  display: none; /* Hidden by default */
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  background: var(--netflix-red);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+/* Mobile Styles */
+@media (max-width: 767px) {
+  .mobile-links-toggle {
+    display: block; /* Show only on mobile */
+  }
+  
+  .stream-list {
+    position: fixed;
+    top: var(--header-height);
+    left: -100%;
+    width: 80%;
+    height: calc(100vh - var(--header-height));
+    transition: transform 0.3s ease;
+    z-index: 900;
+  }
+  
+  .stream-list.active {
+    transform: translateX(100%);
+  }
+  
+  /* Adjust chat container for mobile */
+  .chat-container {
+    right: -100%;
+    width: 80%;
+  }
+}
     
     .chat-container.active {
       transform: translateX(-100%);

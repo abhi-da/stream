@@ -36,6 +36,26 @@ document.addEventListener('DOMContentLoaded', function() {
             })
             .catch(error => console.error('Error loading messages:', error));
     }
+// Toggle stream links on mobile
+const mobileLinksToggle = document.querySelector('.mobile-links-toggle');
+const streamList = document.querySelector('.stream-list');
+
+mobileLinksToggle.addEventListener('click', () => {
+  streamList.classList.toggle('active');
+  mobileLinksToggle.textContent = streamList.classList.contains('active') 
+    ? '❌ Close' 
+    : '📺 Show Stream Links';
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+  if (window.innerWidth <= 767 && 
+      !e.target.closest('.stream-list') && 
+      !e.target.closest('.mobile-links-toggle')) {
+    streamList.classList.remove('active');
+    mobileLinksToggle.textContent = '📺 Show Stream Links';
+  }
+});
 
     // Handle form submission
     chatForm.addEventListener('submit', function(e) {
