@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="stream-container">
+        {% if active_stream %}
+        <iframe class="video-frame"
+                src="{{ active_stream }}"
+                allowfullscreen
+                frameborder="0">
+            Your browser doesn't support iframes
+        </iframe>
+        {% else %}
+        <div class="welcome-message">
+            <h2>IPL Streams 2025</h2>
+            <p>Please select a stream from the left sidebar to begin watching</p>
+            <p>Chat with other viewers using the right sidebar</p>
+            <div class="stream-prompt">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
+                    <path fill="currentColor" d="M8 5v14l11-7z"/>
+                </svg>
+                <p>Choose a Link to start streaming</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

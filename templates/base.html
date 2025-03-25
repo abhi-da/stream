@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IPL Streams 2025</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <header>
+        <button class="menu-toggle">☰</button>
+        <h1>IPL Streams 2025</h1>
+        <button class="chat-toggle">💬</button>
+        <div class="viewer-count">
+            <span class="viewer-icon">👁️</span>
+            <span class="viewer-number">{{ viewers }}</span>
+            <span>viewers</span>
+        </div>
+    </header>
+    
+    <div class="main-container">
+        <!-- Left: Stream Links -->
+        <nav class="stream-list">
+            <div class="quality-group">
+                <h2>HD Streams</h2>
+                <ul>
+                    {% for id, data in streams.items() if data.quality == 'HD' %}
+                    <li>
+                        <a href="{{ url_for('stream', stream_id=id) }}" 
+                           {% if id == active_stream_id %}class="active"{% endif %}>
+                           {{ data.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="quality-group">
+                <h2>SD Streams</h2>
+                <ul>
+                    {% for id, data in streams.items() if data.quality == 'SD' %}
+                    <li>
+                        <a href="{{ url_for('stream', stream_id=id) }}" 
+                           {% if id == active_stream_id %}class="active"{% endif %}>
+                           {{ data.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Middle: Video Player -->
+        <main class="stream-content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!-- Right: Chat Container -->
+        <aside class="chat-container">
+            <h2>Live Chat</h2>
+            <div class="chat-messages" id="chat-messages"></div>
+            <form id="chat-form">
+                <input type="text" id="username" placeholder="Your name" required>
+                <input type="text" id="message" placeholder="Type your message..." required>
+                <button type="submit">Send</button>
+            </form>
+        </aside>
+    </div>
+
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+</body>
+</html>
