@@ -33,6 +33,21 @@
                     {% endfor %}
                 </ul>
             </div>
+
+            <div class="video-container">
+                {% if active_stream %}
+                <iframe class="video-frame" 
+                 src="{{ active_stream }}" 
+                 allowfullscreen
+                 frameborder="0"
+                id="stream-iframe">
+                </iframe>
+                <div class="video-overlay"></div>
+                <button class="fullscreen-btn">⛶ Fullscreen</button>
+                {% else %}
+                 <!-- Your existing placeholder -->
+                 {% endif %}
+            </div>
             
             <div class="quality-group">
                 <h2>SD Streams</h2>

@@ -56,6 +56,38 @@ document.addEventListener('click', (e) => {
     mobileLinksToggle.textContent = '📺 Show Stream Links';
   }
 });
+// Disable all iframe interactions
+document.addEventListener('DOMContentLoaded', function() {
+  const iframe = document.getElementById('stream-iframe');
+  if (iframe) {
+    // Block all iframe pointer events
+    iframe.style.pointerEvents = 'none';
+    
+    // Fullscreen button functionality
+    const fullscreenBtn = document.querySelector('.fullscreen-btn');
+    fullscreenBtn.addEventListener('click', function() {
+      if (iframe.requestFullscreen) {
+        iframe.requestFullscreen();
+      } else if (iframe.webkitRequestFullscreen) {
+        iframe.webkitRequestFullscreen();
+      } else if (iframe.msRequestFullscreen) {
+        iframe.msRequestFullscreen();
+      }
+    });
+    
+    // Additional protection against new windows
+    iframe.addEventListener('load', function() {
+      try {
+        iframe.contentWindow.document.body.style.pointerEvents = 'none';
+        iframe.contentWindow.document.querySelectorAll('a').forEach(a => {
+          a.addEventListener('click', e => e.preventDefault());
+        });
+      } catch(e) {
+        // Cross-origin security will block this
+      }
+    });
+  }
+});
 
     // Handle form submission
     chatForm.addEventListener('submit', function(e) {
