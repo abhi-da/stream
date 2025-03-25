@@ -17,57 +17,60 @@
         </div>
     </header>
    <button class="mobile-links-toggle">📺 Show Stream Links</button> 
-    <div class="main-container">
-        <!-- Left: Stream Links -->
-        <nav class="stream-list">
-            <div class="quality-group">
-                <h2>HD Streams</h2>
-                <ul>
-                    {% for id, data in streams.items() if data.quality == 'HD' %}
-                    <li>
-                        <a href="{{ url_for('stream', stream_id=id) }}" 
-                           {% if id == active_stream_id %}class="active"{% endif %}>
-                           {{ data.name }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
+   <div class="main-container">
+    <!-- Left: Stream Links -->
+    <nav class="stream-list">
+        <div class="quality-group">
+            <h2>HD Streams</h2>
+            <ul>
+                {% for id, data in streams.items() if data.quality == 'HD' %}
+                <li>
+                    <a href="{{ url_for('stream', stream_id=id) }}" 
+                       {% if id == active_stream_id %}class="active"{% endif %}>
+                       {{ data.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        
+        <div class="quality-group">
+            <h2>SD Streams</h2>
+            <ul>
+                {% for id, data in streams.items() if data.quality == 'SD' %}
+                <li>
+                    <a href="{{ url_for('stream', stream_id=id) }}" 
+                       {% if id == active_stream_id %}class="active"{% endif %}>
+                       {{ data.name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </nav>
 
-            <div class="video-container">
-                {% if active_stream %}
-                <iframe class="video-frame" 
-                 src="{{ active_stream }}" 
-                 allowfullscreen
-                 frameborder="0"
-                id="stream-iframe">
-                </iframe>
-                <div class="video-overlay"></div>
-                <button class="fullscreen-btn">⛶ Fullscreen</button>
-                {% else %}
-                 <!-- Your existing placeholder -->
-                 {% endif %}
+    <!-- Middle: Video Player -->
+    <main class="stream-content">
+        <div class="video-container">
+            {% if active_stream %}
+            <iframe class="video-frame" 
+                    src="{{ active_stream }}" 
+                    allowfullscreen
+                    frameborder="0"
+                    id="stream-iframe">
+            </iframe>
+            <div class="video-overlay"></div>
+            <button class="fullscreen-btn">⛶ Fullscreen</button>
+            {% else %}
+            <div class="placeholder">
+                <h2>IPL Streaming Portal</h2>
+                <p>Please select a stream from the left sidebar</p>
             </div>
-            
-            <div class="quality-group">
-                <h2>SD Streams</h2>
-                <ul>
-                    {% for id, data in streams.items() if data.quality == 'SD' %}
-                    <li>
-                        <a href="{{ url_for('stream', stream_id=id) }}" 
-                           {% if id == active_stream_id %}class="active"{% endif %}>
-                           {{ data.name }}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-        </nav>
+            {% endif %}
+        </div>
+    </main>
 
-        <!-- Middle: Video Player -->
-        <main class="stream-content">
-            {% block content %}{% endblock %}
-        </main>
+
 
         <!-- Right: Chat Container -->
         <aside class="chat-container">
